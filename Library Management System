@@ -1,1 +1,47 @@
+import java.util.ArrayList;
+import java.util.Scanner;
 
+//CSEG 5000 Team Project - Library Management System
+//Regan Edwards, Ali Karrar, Jacqueline Smith
+//March 14, 2025
+
+public class LibraryMain {
+
+	public static void main(String[] args) {
+		
+		Scanner scanner = new Scanner(System.in);
+		
+		boolean running = true;
+		
+		while (running) {
+		
+			//print the selection header
+			printMenu();
+			
+			if (scanner.hasNextInt())  {
+				
+				int option = scanner.nextInt();
+				scanner.nextLine();
+
+				if (option == 1)  {
+					LibraryManager.viewBooks();		
+				} else if (option == 2)  {
+					LibraryManager.addBooks(scanner);  
+				} else if (option == 3)  {
+					LibraryManager.searchBooks(scanner);
+				} else if (option == 4)  {
+					System.out.println("Exiting...");   
+					running = false;		//exit the while loop
+				} else  {
+					System.out.println("Invalid number - choose 1-4");  //if user enters an invalid number
+				}
+			} else {
+				System.out.println("Invalid entry - must be a number");  //if user enters an invalid character
+				scanner.next();
+			}
+		}
+	scanner.close();
+	}
+
+
+}
