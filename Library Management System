@@ -1,53 +1,112 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//CSEG 5000 Team Project - Library Management System
-//Regan Edwards, Ali Karrar, Jacqueline Smith
-//March 14, 2025
+// CSEG 5000 Team Project - Library Management System
+// Regan Edwards, Ali Karrar, Jacqueline Smith
+// March 14, 2025
 
 public class LibraryMain {
 
-	public static void main(String[] args) {
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		boolean running = true;
-		
-		while (running) {
-		
-			//print the selection header
-			printMenu();
-			
-			if (scanner.hasNextInt())  {
-				
-				int option = scanner.nextInt();
-				scanner.nextLine();
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
 
-				if (option == 1)  {
-					LibraryManager.viewBooks();		
-				} else if (option == 2)  {
-					LibraryManager.addBooks(scanner);  
-				} else if (option == 3)  {
-					LibraryManager.searchBooks(scanner);
-				} else if (option == 4)  {
-					System.out.println("Exiting...");   
-					running = false;		//exit the while loop
-				} else  {
-					System.out.println("Invalid number - choose 1-4");  //if user enters an invalid number
-				}
-			} else {
-				System.out.println("Invalid entry - must be a number");  //if user enters an invalid character
-				scanner.next();
-			}
-		}
-	scanner.close();
-	}
+        while (running) {
+            // Print the selection header
+            printMenu();
 
-public static void printMenu()  {
-	System.out.println("1: View Books");
-	System.out.println("2: Add Books");
-	System.out.println("3: Search Books");
-	System.out.println("4: Exit Library Program");
+            if (scanner.hasNextInt()) {
+                int option = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                switch (option) {
+                    case 1:
+                        LibraryManager.viewBooks();
+                        break;
+                    case 2:
+                        LibraryManager.addBooks(scanner);
+                        break;
+                    case 3:
+                        LibraryManager.searchBooks(scanner);
+                        break;
+                    case 4:
+                        System.out.println("Exiting the Library Management System... Goodbye!");
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid number! Please choose between 1-4.");
+                }
+            } else {
+                System.out.println("Invalid entry! Please enter a valid number.");
+                scanner.next(); // Consume the invalid input
+            }
+        }
+        scanner.close();
+    }
+
+    // Method to display the main menu with better formatting
+    public static void printMenu() {
+        System.out.println("\n-----------------------------");
+        System.out.println("  Library Management System  ");
+        System.out.println("-----------------------------");
+        System.out.println("1: View Books");
+        System.out.println("2: Add Book");
+        System.out.println("3: Search Book");
+        System.out.println("4: Exit");
+        System.out.print("Choose an option: ");
+    }
 }
 
+// Library operations class
+class LibraryManager {
+    private static ArrayList<String> books = new ArrayList<>();
+
+    // Method to display all books
+    public static void viewBooks() {
+        System.out.println("\n--- Library Books ---");
+        if (books.isEmpty()) {
+            System.out.println("No books currently in the library.");
+        } else {
+            for (int i = 0; i < books.size(); i++) {
+                System.out.println((i + 1) + ". " + books.get(i));
+            }
+        }
+    }
+
+    // Method to add a new book
+    public static void addBooks(Scanner scanner) {
+        System.out.print("Enter book name to add: ");
+        String bookName = scanner.nextLine().trim();
+
+        if (bookName.isEmpty()) {
+            System.out.println("Book name cannot be empty!");
+        } else if (isBookInLibrary(bookName)) {
+            System.out.println("Book \"" + bookName + "\" is already in the library.");
+        } else {
+            books.add(bookName);
+            System.out.println("Book \"" + bookName + "\" added successfully!");
+        }
+    }
+
+    // Method to search for a book
+    public static void searchBooks(Scanner scanner) {
+        System.out.print("Enter book name to search: ");
+        String bookName = scanner.nextLine().trim();
+
+        if (isBookInLibrary(bookName)) {
+            System.out.println("Book \"" + bookName + "\" is available in the library!");
+        } else {
+            System.out.println("Book \"" + bookName + "\" is not in the library.");
+        }
+    }
+
+    // Helper method to check if a book exists
+    private static boolean isBookInLibrary(String bookName) {
+        for (String book : books) {
+            if (book.equalsIgnoreCase(bookName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
