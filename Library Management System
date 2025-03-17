@@ -39,7 +39,7 @@ public class LibraryMain {
         scanner.close();
     }
 
-    // Moved printMenu inside LibraryMain
+    // LibraryMain
     public static void printMenu() {
         System.out.println("\n-----------------------------");
         System.out.println("  Library Management System  ");
@@ -83,7 +83,7 @@ class LibraryManager {
         }
     }
 
-    // Search for a book (now case-insensitive)
+    // Search for a book
     public static void searchBooks(Scanner scanner) {
         System.out.print("Enter book name to search: ");
         String bookName = scanner.nextLine().trim();
