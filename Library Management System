@@ -95,11 +95,19 @@ class LibraryManager {
                 break;
             }
         }
+        
+        ArrayList<String> similarBooks = new ArrayList<>();
 
         if (found) {
             System.out.println("Book \"" + bookName + "\" is available in the library!");
         } else {
-            System.out.println("Book \"" + bookName + "\" is not in the library.");
+            
+            for (String book : books) {
+                if (book.toLowerCase().contains(bookName.toLowerCase())) {
+                    similarBooks.add(book);
+                }
+            }
+            System.out.println("Book \"" + bookName + "\" is not in the library. However, the following similar books were found:  \n" + similarBooks);
         }
     }
 
